@@ -4,89 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Obrigado - KORA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --primary: #FF5E1A;
-      --primary-light: #FF8E53;
-      --dark: #111827;
-      --gray: #6B7280;
       --light: #F9FAFB;
       --white: #FFFFFF;
     }
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--light);
-      color: var(--dark);
-      margin: 0;
-      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       text-align: center;
-      line-height: 1.6;
+      padding: 20px;
     }
-    .thank-you-container {
-      max-width: 600px;
-      padding: 3rem;
+    .thank-you-box {
       background: var(--white);
+      padding: 40px;
       border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      max-width: 600px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    h1 {
-      font-family: 'Playfair Display', serif;
+    .icon-check {
       color: var(--primary);
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-    }
-    p {
-      color: var(--gray);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-    }
-    .icon {
       font-size: 4rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      animation: bounce 1s infinite alternate;
-    }
-    .btn {
-      display: inline-block;
-      background-color: var(--primary);
-      color: var(--white);
-      padding: 12px 24px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-    }
-    .btn:hover {
-      background-color: var(--primary-light);
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 94, 26, 0.3);
-    }
-    @keyframes bounce {
-      from { transform: translateY(0); }
-      to { transform: translateY(-15px); }
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="thank-you-container">
-    <div class="icon">
+  <div class="thank-you-box">
+    <div class="icon-check">
       <i class="fas fa-check-circle"></i>
     </div>
-    <h1>Obrigado pelo seu contato!</h1>
-    <p>Sua mensagem foi enviada com sucesso para a <strong>KORA</strong>.</p>
-    <p>Nossa equipe entrará em contato em até <strong>24 horas úteis</strong>.</p>
-    <p>Acompanhe nosso trabalho no Instagram:</p>
-    <a href="https://instagram.com/kora.mktbr" target="_blank" class="btn">
-      <i class="fab fa-instagram"></i> @kora.mktbr
+    <h1>Mensagem Enviada!</h1>
+    <p>Obrigado por entrar em contato com a KORA.</p>
+    <p>Nossa equipe responderá em até <strong>24 horas úteis</strong>.</p>
+    <p>
+      <a href="https://instagram.com/kora.mktbr" style="color: var(--primary);">
+        <i class="fab fa-instagram"></i> @kora.mktbr
+      </a>
+    </p>
+    <a href="index.html" style="display: inline-block; margin-top: 20px; color: var(--primary);">
+      ← Voltar para o site
     </a>
   </div>
 </body>
