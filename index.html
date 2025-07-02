@@ -428,6 +428,27 @@
       resize: vertical;
     }
     
+    /* Form Message */
+    .form-message {
+      display: none;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .form-message.success {
+      background-color: rgba(40, 167, 69, 0.1);
+      color: #28a745;
+      display: block;
+    }
+    
+    .form-message.error {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+      display: block;
+    }
+    
     /* Buttons */
     .btn {
       display: inline-flex;
@@ -646,6 +667,20 @@
         padding: 2rem;
       }
     }
+    
+    @media (max-width: 480px) {
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-info, .contact-form {
+        padding: 2rem 1.5rem;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -837,6 +872,8 @@
       </div>
       
       <div class="contact-form">
+        <div id="form-message" class="form-message"></div>
+        
         <form id="leadForm" action="https://formsubmit.co/contato.kora1@gmail.com" method="POST">
           <input type="hidden" name="_next" value="https://koramktbr.github.io/obrigado.html">
           <input type="hidden" name="_subject" value="Novo lead KORA - Formulário Site">
@@ -860,7 +897,7 @@
           
           <div class="form-group">
             <label for="telefone">WhatsApp*</label>
-            <input type="tel" id="telefone" name="telefone" required placeholder="Ex: 14999999999">
+            <input type="tel" id="telefone" name="telefone" required placeholder="Ex: 14999999999" pattern="[0-9]{11}" title="Digite um número com DDD (apenas números)">
           </div>
           
           <div class="form-group">
@@ -880,7 +917,7 @@
             <textarea id="mensagem" name="mensagem" required placeholder="Nos conte sobre seus produtos/serviços, público-alvo e objetivos..."></textarea>
           </div>
           
-          <button type="submit" class="btn btn-block">ENVIAR MENSAGEM <i class="fas fa-paper-plane"></i></button>
+          <button type="submit" class="btn btn-block" id="submit-btn">ENVIAR MENSAGEM <i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
     </div>
@@ -944,14 +981,51 @@
       }
     });
     
-    // WhatsApp validation
-    document.getElementById('leadForm').addEventListener('submit', function(e) {
+    // Form submission handling
+    document.getElementById('leadForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = document.getElementById('submit-btn');
+      const formMessage = document.getElementById('form-message');
+      
+      // Validação do WhatsApp
       const tel = document.getElementById('telefone').value.replace(/\D/g, '');
       if (tel.length < 11) {
-        alert('Por favor, insira um WhatsApp válido com DDD');
-        e.preventDefault();
-      } else {
-        document.getElementById('telefone').value = tel;
+        formMessage.textContent = 'Por favor, insira um WhatsApp válido com DDD (apenas números)';
+        formMessage.className = 'form-message error';
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Enviando... <i class="fas fa-spinner fa-spin"></i>';
+      
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
+        if (response.ok) {
+          formMessage.textContent = 'Mensagem enviada com sucesso! Redirecionando...';
+          formMessage.className = 'form-message success';
+          form.reset();
+          
+          // Redireciona após 3 segundos
+          setTimeout(() => {
+            window.location.href = form.querySelector('input[name="_next"]').value;
+          }, 3000);
+        } else {
+          throw new Error('Erro no envio');
+        }
+      } catch (error) {
+        formMessage.textContent = 'Ocorreu um erro ao enviar. Por favor, tente novamente ou entre em contato diretamente pelo WhatsApp.';
+        formMessage.className = 'form-message error';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'ENVIAR MENSAGEM <i class="fas fa-paper-plane"></i>';
       }
     });
     
